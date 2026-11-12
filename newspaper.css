@@ -1,0 +1,853 @@
+/* ============================================================
+   THE DAILY PORTFOLIO — themed after The CW's Arrowverse
+   ------------------------------------------------------------
+   FLASH EDITION (default)  — black and violet, after the
+   Enlightenment that turned the sky purple over Central City
+   (The Flash, season four).
+   ARROW EDITION (body.dark) — black, red and green.
+   Flat colour only: no glows, no halos, no blur shadows.
+   ============================================================ */
+
+:root {
+  /* — THE FLASH: black / violet — the Enlightenment — */
+  --accent1: #9d4edd;        /* enlightenment violet — the sky over Central City */
+  --accent1-deep: #6a2fb3;
+  --accent2: #c77dff;        /* orchid — the satellites' polarized light */
+  --accent2-bright: #e0c3fc;
+
+  --paper: #0c0913;          /* the blackout night */
+  --ink: #ece9f4;
+  --ink-soft: #a9a0bd;
+  --ink-faint: #7e7593;
+  --rule: #322947;
+
+  --accent: var(--accent1);
+
+  --glyph: "⚡";
+  --display: "Arial Black", "Arial Bold", Arial, sans-serif;
+
+  --grad-stripe: linear-gradient(90deg,
+    #5a189a 0%, #9d4edd 35%, #c77dff 65%, #5a189a 100%);
+  --grad-accent: linear-gradient(90deg, #6a2fb3, #9d4edd);
+  --masthead-grad: linear-gradient(178deg,
+    #e0c3fc 0%, #9d4edd 58%, #5a189a 100%);
+
+  --paper-texture: repeating-linear-gradient(-38deg,
+      rgba(157, 78, 221, 0.05) 0 2px, transparent 2px 26px,
+      rgba(199, 125, 255, 0.05) 26px 28px, transparent 28px 52px);
+  --vignette: radial-gradient(120% 90% at 50% 40%,
+    transparent 55%, rgba(0, 0, 0, 0.45) 100%);
+
+  /* giant violet bolt watermark behind the lead story */
+  --watermark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13 2 3 14h7l-1 8 11-13h-7l1-7z' fill='%239d4edd' fill-opacity='0.12'/%3E%3C/svg%3E");
+
+  --ticker-bg: var(--accent1);
+  --ticker-ink: #ffffff;
+  --ticker-strip: var(--accent2);
+  --ticker-bar: rgba(157, 78, 221, 0.08);
+
+  --column-rule: linear-gradient(180deg,
+    rgba(157, 78, 221, 0.55), rgba(199, 125, 255, 0.5) 50%, rgba(90, 24, 154, 0.5));
+
+  --serif: Georgia, "Times New Roman", Times, serif;
+  --gothic: Impact, Haettenschweiler, "Franklin Gothic Medium",
+    "Arial Narrow", "Arial Narrow Bold", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--accent2); color: #ffffff; }
+
+a { color: var(--ink); }
+
+/* --------------------------------- PAPER --------------------------------- */
+.paper {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: clamp(16px, 3vw, 34px) clamp(20px, 4vw, 48px) clamp(20px, 3vw, 40px);
+  background:
+    var(--paper-texture),
+    var(--paper);
+  position: relative;
+}
+
+.paper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--vignette);
+}
+
+/* -------------------------------- MASTHEAD ------------------------------- */
+/* after the Enlightenment sky: violet wordmark, violet bolt, blackout field */
+.masthead { text-align: center; position: relative; }
+
+.masthead-rule,
+.masthead-sub {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--gothic);
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* the violet stripe across the top of the page */
+.masthead-rule {
+  border-top: 3px solid transparent;
+  border-bottom: 1px solid transparent;
+  border-image: var(--grad-stripe) 1;
+  padding: 6px 2px;
+}
+
+.masthead-sub {
+  border-top: 1px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-image: var(--grad-stripe) 1;
+  padding: 6px 2px 7px;
+}
+
+.center { flex: 1; text-align: center; }
+
+.masthead h1 {
+  margin: 14px 0 12px;
+  font-family: var(--display);
+  font-size: clamp(38px, 8vw, 92px);
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: var(--masthead-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* the glyph that strikes through the wordmark */
+.masthead h1::after {
+  content: var(--glyph);
+  -webkit-text-fill-color: var(--accent1);
+  color: var(--accent1);
+  font-size: 0.78em;
+  margin-left: 0.12em;
+  vertical-align: 0.06em;
+}
+
+/* ---------------------------------- NAV ---------------------------------- */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 18px;
+  padding: 9px 0;
+  border-bottom: 2px solid var(--rule);
+  font-family: var(--gothic);
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  position: relative;
+}
+
+/* a two-colour hairline under the nav */
+.nav::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent, var(--accent1) 20%, var(--accent2) 80%, transparent);
+}
+
+.nav a {
+  --link-accent: var(--accent1);
+  text-decoration: none;
+  padding: 2px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.nav a:nth-child(even) { --link-accent: var(--accent2); }
+
+.nav a:hover,
+.nav a:focus-visible {
+  color: var(--link-accent);
+  border-bottom-color: var(--link-accent);
+  outline: none;
+}
+
+/* --------------------------------- TICKER -------------------------------- */
+/* violet plate, white text, orchid base-strip */
+.ticker {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--rule);
+  background: var(--ticker-bar);
+}
+
+.ticker-label {
+  font-family: var(--gothic);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  background: var(--ticker-bg);
+  color: var(--ticker-ink);
+  padding: 7px 12px;
+  white-space: nowrap;
+  box-shadow: inset 0 -3px 0 var(--ticker-strip);
+}
+
+.ticker-label::before {
+  content: var(--glyph);
+  margin-right: 7px;
+}
+
+.ticker-window {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.ticker-text {
+  font-family: var(--gothic);
+  font-size: 12.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 7px 14px;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+.ticker-text.fading { opacity: 0; }
+
+/* ---------------------------------- PAGE --------------------------------- */
+section[id] { scroll-margin-top: 1in; }
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 2.15fr) minmax(0, 1fr);
+  gap: 0 26px;
+  padding-top: 20px;
+}
+
+.lead { grid-column: 1; min-width: 0; position: relative; }
+
+/* the giant glyph watermark behind the lead story */
+.lead::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  right: -10px;
+  width: clamp(160px, 22vw, 300px);
+  height: clamp(200px, 28vw, 380px);
+  background: var(--watermark) center / contain no-repeat;
+  pointer-events: none;
+}
+
+.rail {
+  grid-column: 2;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.story,
+.classifieds,
+.contact {
+  grid-column: 1 / -1;
+  margin-top: 26px;
+  padding-top: 14px;
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg,
+    transparent 1%, var(--accent) 18%, var(--accent) 82%, transparent 99%) 1;
+}
+
+/* — section accents alternate the two edition colours — */
+#front-page { --accent: var(--accent1); }
+#projects   { --accent: var(--accent2); }
+#skills     { --accent: var(--accent1); }
+#thoughts   { --accent: var(--accent2); }
+#contact    { --accent: var(--accent1); }
+#cinema     { --accent: var(--accent1); }
+#nature     { --accent: var(--accent2); }
+
+/* ------------------------------- TYPOGRAPHY ------------------------------ */
+/* the kicker: an opening-credit line in the section colour */
+.kicker {
+  font-family: var(--gothic);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.kicker::before {
+  content: var(--glyph);
+  margin-right: 8px;
+}
+
+.headline {
+  margin: 0 0 10px;
+  font-size: clamp(30px, 4.4vw, 52px);
+  line-height: 1.03;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  color: var(--accent);
+}
+
+.deck {
+  font-size: clamp(17px, 2vw, 21px);
+  font-style: italic;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+  line-height: 1.4;
+}
+
+.byline {
+  font-family: var(--gothic);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border-top: 1px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  padding: 5px 0;
+  margin-bottom: 14px;
+}
+
+.byline .bar { color: var(--accent); }
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 26px;
+  position: relative;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* a two-colour rule down the centre of the gutter */
+.columns::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  background: var(--column-rule);
+}
+
+.col { min-width: 0; }
+
+.columns p { margin: 0 0 1em; }
+
+.columns .col > p:not(:first-child) { text-indent: 1.25em; }
+
+.lede { text-indent: 0 !important; }
+
+.lede::first-letter {
+  float: left;
+  font-size: 3.6em;
+  line-height: 0.78;
+  font-weight: 700;
+  padding: 0.04em 0.09em 0 0;
+  color: var(--accent);
+}
+
+/* --------------------------- COLUMN HEAD / MORE -------------------------- */
+.col-head {
+  font-family: var(--gothic);
+  font-size: clamp(14px, 1.6vw, 17px);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--accent);
+  border-top: 3px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  padding: 6px 0;
+  margin-bottom: 12px;
+}
+
+.read-more {
+  text-indent: 0 !important;
+  margin: 0;
+  font-family: var(--gothic);
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.read-more a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.read-more a:hover {
+  background: var(--accent2);
+  color: var(--paper);
+}
+
+.columns + .col-head { margin-top: 26px; }
+
+/* ---------------------------------- RAIL --------------------------------- */
+.rail > * + * { margin-top: 16px; }
+
+.box.fill {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.box.fill > strong {
+  flex: 1 1 auto;
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.95;
+  letter-spacing: 0.01em;
+}
+
+/* rail panels alternate the two edition colours */
+.box {
+  --accent: var(--accent2);
+  border: 1px solid var(--accent);
+  border-top: 3px solid var(--accent);
+  padding: 12px 14px 14px;
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  transition: box-shadow 0.15s ease;
+}
+
+.box:hover {
+  box-shadow: 3px 4px 0 color-mix(in srgb, var(--accent) 80%, transparent);
+}
+
+.rail .box + .box { --accent: var(--accent1); }
+
+.box h3 {
+  margin: 0 0 8px;
+  font-family: var(--gothic);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--accent);
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  padding-bottom: 6px;
+}
+
+.index-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 14.5px;
+}
+
+.index-list li {
+  padding: 6px 0;
+  border-bottom: 1px dotted color-mix(in srgb, var(--ink) 35%, transparent);
+}
+
+.index-list li:last-child { border-bottom: none; }
+
+/* -------------------------------- PROJECTS ------------------------------- */
+.project-list {
+  list-style: none;
+  counter-reset: proj;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 30px;
+}
+
+.project-list li {
+  counter-increment: proj;
+  padding: 14px 0 4px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.project-list h3 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  line-height: 1.15;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* numbered like a case file: secondary-colour badge, black digits */
+.project-list h3::before {
+  content: counter(proj, decimal-leading-zero) " ";
+  font-family: var(--display);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--paper);
+  background: var(--accent2);
+  padding: 1px 7px;
+  margin-right: 8px;
+  vertical-align: 0.14em;
+}
+
+.project-list p {
+  margin: 0;
+  font-size: 15.5px;
+  text-align: justify;
+  hyphens: auto;
+}
+
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.9em;
+  background: color-mix(in srgb, var(--accent2) 24%, transparent);
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+
+/* ------------------------- SECTION HEAD / CLASSIFIEDS -------------------- */
+.section-head {
+  text-align: center;
+  border-top: 3px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  padding: 7px 0;
+  margin-bottom: 16px;
+}
+
+.section-head span {
+  font-family: var(--gothic);
+  font-size: clamp(15px, 2.4vw, 21px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.ads {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+/* classifieds alternate the two edition colours */
+.ads .ad:nth-of-type(odd)  { --accent: var(--accent1); }
+.ads .ad:nth-of-type(even) { --accent: var(--accent2); }
+
+.ad {
+  border: 2px solid var(--accent);
+  border-top-width: 5px;
+  padding: 12px 14px 14px;
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ad:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 5px 0 color-mix(in srgb, var(--accent) 85%, transparent);
+}
+
+.ad.wide,
+.ad.notice { grid-column: span 1; }
+
+.ad h4 {
+  margin: 0 0 7px;
+  font-family: var(--gothic);
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--accent);
+  border-bottom: 1px dashed color-mix(in srgb, var(--accent) 60%, transparent);
+  padding-bottom: 6px;
+}
+
+.ad p {
+  margin: 0;
+  font-size: 14.5px;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+.ad a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  transition: background 0.15s ease;
+}
+
+.ad a:hover { background: color-mix(in srgb, var(--accent) 16%, transparent); }
+
+/* -------------------------------- THOUGHTS ------------------------------- */
+.thoughts-body {
+  column-count: 2;
+  column-gap: 26px;
+  column-rule: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  text-align: justify;
+  hyphens: auto;
+}
+
+.single-column {
+  text-align: justify;
+  hyphens: auto;
+}
+
+.single-column p { margin: 0 0 1em; }
+
+.single-column p:not(:first-child) { text-indent: 1.25em; }
+
+.single-column p:first-child::first-letter {
+  float: left;
+  font-size: 3.6em;
+  line-height: 0.78;
+  font-weight: 700;
+  padding: 0.04em 0.09em 0 0;
+  color: var(--accent);
+}
+
+.thoughts-body p { margin: 0 0 1em; }
+
+.thoughts-body p:not(:first-child) { text-indent: 1.25em; }
+
+.thoughts-body p:first-child::first-letter {
+  float: left;
+  font-size: 3.6em;
+  line-height: 0.78;
+  font-weight: 700;
+  padding: 0.04em 0.09em 0 0;
+  color: var(--accent);
+}
+
+/* ------------------------------- PULL QUOTES ------------------------------ */
+/* set-off quotations, in the style of a broadsheet pull-quote */
+.pullquote {
+  margin: 0 0 1.1em;
+  padding: 3px 0 3px 14px;
+  border-left: 4px solid var(--accent);
+  font-size: 1.05em;
+  font-style: italic;
+  line-height: 1.45;
+  text-align: left;
+  text-indent: 0 !important;
+  hyphens: none;
+}
+
+.pullquote cite {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--gothic);
+  font-size: 11px;
+  font-style: normal;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent2);
+}
+
+.pullquote cite::before { content: "\2014 "; }
+
+/* a subhead that opens a column sits flush with the rule above it */
+.col-head + p { text-indent: 0 !important; }
+
+/* --------------------------------- FOOTER -------------------------------- */
+.footer {
+  margin-top: 30px;
+  text-align: center;
+}
+
+/* the closing credit stripe in the two edition colours */
+.footer-rule {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--grad-stripe);
+  margin-bottom: 12px;
+}
+
+.footer p {
+  margin: 0 0 6px;
+  font-family: var(--gothic);
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.footer .small {
+  font-family: var(--serif);
+  font-size: 12.5px;
+  letter-spacing: normal;
+  text-transform: none;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+
+/* ------------------------------- EDITION TOGGLE -------------------------- */
+/* flat two-tone pill: primary plate, secondary ring, no glow */
+.edition-toggle {
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--gothic);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 2px solid var(--accent2);
+  background: var(--accent1);
+  color: #ffffff;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.edition-toggle:hover {
+  transform: translateY(-1px) scale(1.03);
+  filter: brightness(1.1);
+}
+
+.edition-toggle:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* ======================= ARROW EDITION (body.dark) ======================= */
+/* black, red and green — the hood over Starling City */
+body.dark {
+  --accent1: #01ab49;        /* the emerald of the hood */
+  --accent1-deep: #017a37;
+  --accent2: #d9202c;        /* vigilante red */
+  --accent2-bright: #e8353f;
+
+  --paper: #091209;          /* black, a whisper of green */
+  --ink: #dfe9e2;
+  --ink-soft: #9db3a6;
+  --ink-faint: #6e8378;
+  --rule: #1f3a2c;
+
+  --glyph: "▲";
+  --display: "Arial Narrow", "Franklin Gothic Medium", "Arial Narrow Bold", Arial, sans-serif;
+
+  --grad-stripe: linear-gradient(90deg,
+    #05140c 0%, #01ab49 35%, #d9202c 75%, #05140c 100%);
+  --grad-accent: linear-gradient(90deg, #017a37, #01ab49);
+  --masthead-grad: linear-gradient(180deg, #f0f6f1 0%, #aebfb4 100%);
+
+  --paper-texture: repeating-linear-gradient(-38deg,
+      rgba(1, 171, 73, 0.05) 0 2px, transparent 2px 26px,
+      rgba(217, 32, 44, 0.05) 26px 28px, transparent 28px 52px);
+  --vignette: radial-gradient(120% 90% at 50% 40%,
+    transparent 50%, rgba(0, 0, 0, 0.55) 100%);
+
+  /* the arrowhead watermark behind the lead story */
+  --watermark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2 22.5 21h-21z' fill='%2301ab49' fill-opacity='0.12'/%3E%3C/svg%3E");
+
+  --ticker-bg: #050806;       /* the title card is black */
+  --ticker-ink: #e8353f;     /* red wire text */
+  --ticker-strip: #01ab49;
+  --ticker-bar: rgba(1, 171, 73, 0.07);
+
+  --column-rule: linear-gradient(180deg,
+    rgba(1, 171, 73, 0.55), rgba(217, 32, 44, 0.45) 50%, rgba(1, 122, 55, 0.5));
+
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body.dark ::selection { background: var(--accent2); color: #ffffff; }
+
+body.dark a { color: var(--ink); }
+
+/* the masthead becomes the ARROW title-card wordmark:
+   silver letters, wide tracking, an emerald arrowhead */
+body.dark .masthead h1 {
+  font-weight: 400;
+  letter-spacing: 0.34em;
+}
+
+/* dark digits sit brighter on the green plate */
+body.dark .edition-toggle { color: #04150c; }
+
+/* ------------------------------- RESPONSIVE ------------------------------ */
+@media (max-width: 900px) {
+  .page { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .lead, .rail { grid-column: 1; }
+  .rail { margin-top: 22px; }
+  .project-list { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 620px) {
+  body { font-size: 16px; }
+  .paper { padding: 18px 16px 24px; }
+  .columns { grid-template-columns: minmax(0, 1fr); row-gap: 4px; }
+  .columns::after { display: none; }
+  .columns .col + .col {
+    border-top: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+    padding-top: 12px;
+    margin-top: 4px;
+  }
+  .masthead-rule .center,
+  .masthead-sub .center { display: none; }
+  .masthead h1 { letter-spacing: 0.01em; }
+  .thoughts-body { column-count: 1; }
+}
+
+/* ---------------------------------- PRINT -------------------------------- */
+@media print {
+  body {
+    background: #fff;
+    padding: 0;
+    font-size: 11pt;
+    color: #000;
+  }
+  .paper {
+    box-shadow: none;
+    background: #fff;
+    max-width: none;
+    padding: 0;
+  }
+  .paper::after, .lead::before { display: none; }
+  .masthead h1 {
+    background: none;
+    color: #000;
+    -webkit-text-fill-color: #000;
+    filter: none;
+    font-family: var(--serif);
+    letter-spacing: normal;
+  }
+  .masthead h1::after { content: none; }
+  .nav, .ticker { display: none !important; }
+  .page { grid-template-columns: 1fr 1fr; }
+  .ad:hover { transform: none; box-shadow: none; }
+  .ad, .box, .section-head, .col-head {
+    background: none;
+    border-color: #000;
+  }
+  .headline, .kicker, .col-head, .section-head span, .ad h4 { color: #000; }
+  .lede::first-letter,
+  .thoughts-body p:first-child::first-letter,
+  .single-column p:first-child::first-letter { color: #000; }
+  a { text-decoration: none; color: inherit; }
+}
